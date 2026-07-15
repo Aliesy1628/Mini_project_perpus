@@ -1,0 +1,2 @@
+Mahasiswa;0012;Ahzar;0003
+DOSEN;0002;Aika;0451
