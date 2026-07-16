@@ -15,6 +15,11 @@ public class Perpustakaan {
 
     private static  String FILE_BUKU = "data_buku.txt";
     private static String FILE_ANGGOTA = "data_anggota.txt";
+    private static String FILE_TRANSAKSI = "data_transaksi.txt";
+
+    public List getKoleksi() {
+        return koleksi;
+    }
 
     public Perpustakaan() {
         this.koleksi = new ArrayList<>();
@@ -29,8 +34,17 @@ public class Perpustakaan {
     }
 
     public Buku cariBukuByKode(String kode) {
-        for (Buku b : koleksi) {
-            if (b.getKodeBuku().equalsIgnoreCase(kode)) {
+        for (Buku b : this.koleksi) {
+            if (b.getKodeBuku().equalsIgnoreCase(kode.trim())) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    public Buku cariBukuByJudul(String judul) {
+        for (Buku b : this.koleksi) {
+            if (b.getJudul().equalsIgnoreCase(judul.trim())) {
                 return b;
             }
         }
@@ -65,7 +79,7 @@ public class Perpustakaan {
     }
 
     //Transaksi
-    public boolean pinjamBuku(String kodeBuku, String id) {
+    public boolean pinjamBuku(String kodeBuku,String id) {
         Buku buku = cariBukuByKode(kodeBuku);
         Anggota anggota = cariAnggotaById(id);
 
@@ -89,16 +103,24 @@ public class Perpustakaan {
         return true;
     }
 
+    public void tampilkanTransaksi() {
+        for (Transaksi t : daftarTransaksi) {
+            System.out.println(t.tampilkanInfo());
+        }
+    }
+
     public void kembalikanBuku(String idTransaksi) {
         for (Transaksi t : daftarTransaksi) {
             if (t.getIdTransaksi().equalsIgnoreCase(idTransaksi) && !t.isSudahKembali()) {
                 double denda = t.kembalikanBuku();
-                System.out.println("Buku " + t.getBuku().getJudul() + " Berhasil dikembalikan");
+                    System.out.println("Buku " + t.getBuku().getJudul() + " Berhasil dikembalikan.");
                 if (denda > 0) {
                     System.out.println("Mengembalikan terlambat, denda yang harus dibayar: Rp" + denda);
                 } else {
                     System.out.println("Tidak terlambat, tidak ada denda");
                 }
+                System.out.println("");
+                this.simpanDataKeFile();
                 return;
             }
         }
@@ -123,6 +145,16 @@ public class Perpustakaan {
             }
         } catch (IOException e) {
             System.out.println("Gagal menyimpan data anggota: " + e.getMessage());
+            return;
+        }
+
+        try (BufferedWriter writerTransaksi = new BufferedWriter(new FileWriter(FILE_TRANSAKSI))) {
+            for (Transaksi t : daftarTransaksi) {
+                writerTransaksi.write(t.toFileString());
+                writerTransaksi.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Gagal menyimpan data transaksi: " + e.getMessage());
             return;
         }
 
@@ -174,6 +206,23 @@ public class Perpustakaan {
             }
         } catch (IOException e) {
             System.out.println("Belum ada file data anggota tersimpan (" + FILE_ANGGOTA + ").");
+        }
+
+        try (BufferedReader readerTrasnsaksi = new BufferedReader(new FileReader(FILE_TRANSAKSI))) {
+            daftarTransaksi.clear();
+            String baris;
+            while ((baris = readerTrasnsaksi.readLine()) != null) {
+                if (baris.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    daftarTransaksi.add(Transaksi.fromFileString(baris, this));
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    System.out.println("transaksi rusak/dilewati: " + baris);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Belum ada file data transaksi tersimpan (" + FILE_TRANSAKSI + ").");
         }
 
         System.out.println("Proses memuat data selesai.");

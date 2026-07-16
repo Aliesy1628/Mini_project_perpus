@@ -8,10 +8,12 @@ public class Main {
 
         boolean berjalan = true;
 
+        perpustakaan.muatDataDariFile();
+
         while (berjalan) {
             tampilkanMenu();
             int pilihan;
-        
+
             try {
                 pilihan = Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
@@ -39,9 +41,12 @@ public class Main {
                         perpustakaan.tampilkanAnggota();
                         break;
                     case 7:
-                        perpustakaan.simpanDataKeFile();
+                        perpustakaan.tampilkanTransaksi();
                         break;
                     case 8:
+                        perpustakaan.simpanDataKeFile();
+                        break;
+                    case 9:
                         perpustakaan.muatDataDariFile();
                         break;
                     case 0:
@@ -65,8 +70,9 @@ public class Main {
         System.out.println("4. Kembalikan Buku (hitung denda)");
         System.out.println("5. Tampilkan Semua Buku");
         System.out.println("6. Tampilkan Semua Anggota");
-        System.out.println("7. Simpan Data ke File");
-        System.out.println("8. Muat Data dari File");
+        System.out.println("7. Tampilkan Semua Transaksi");
+        System.out.println("8. Simpan Data ke File");
+        System.out.println("9. Muat Data dari File");
         System.out.println("0. Keluar");
         System.out.print("Pilih menu: ");
     }
