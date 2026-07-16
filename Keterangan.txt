@@ -1,0 +1,8 @@
+Penambahan agar transaksi dapat disimpan pada saat running kode pertama di exit, dan dapat digunakan pada running kode kedua.
+Dapat digunakan untuk saat pengembalian buku yang melibatkan transaksi
+Pada saat peminjaman buku di running kode pertama, stok buku akan dikurangi 1
+Pada saat pengembalian buku di running kode kedua, stok buku akan ditambah 1
+data transaksi ini mungkin diperlukan apabila sistem itu mati entah itu disengaja atau tidak,
+data transaksi ini masih bisa dipakai untuk melihat siapa saja yang telah meminjam.
+
+Muhammad Ahzar Fahrezi (3012510003) == IF-2A
