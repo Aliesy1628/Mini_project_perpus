@@ -7,9 +7,9 @@ public class Transaksi {
     private static int counter = 0;
 
     private String idTransaksi;
-    private Buku buku;
-    private Anggota peminjam;
-    private LocalDate tanggalPinjam;
+    private final Buku buku;
+    private final Anggota peminjam;
+    private final LocalDate tanggalPinjam;
     private LocalDate tanggalKembali;
     private boolean sudahKembali;
 

@@ -2,7 +2,7 @@
 
 public class Mahasiswa extends Anggota {
     
-    private String nim;
+    private final String nim;
 
     public Mahasiswa(String nama, String id, String nim) {
         super(nama, id);

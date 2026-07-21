@@ -9,13 +9,13 @@ import java.util.List;
 
 public class Perpustakaan {
 
-    private List<Buku> koleksi;
-    private List<Anggota> daftarAnggota;
-    private List<Transaksi> daftarTransaksi;
+    private final List<Buku> koleksi;
+    private final List<Anggota> daftarAnggota;
+    private final List<Transaksi> daftarTransaksi;
 
-    private static  String FILE_BUKU = "data_buku.txt";
-    private static String FILE_ANGGOTA = "data_anggota.txt";
-    private static String FILE_TRANSAKSI = "data_transaksi.txt";
+    private final static String FILE_BUKU = "data_buku.txt";
+    private final static String FILE_ANGGOTA = "data_anggota.txt";
+    private final static String FILE_TRANSAKSI = "data_transaksi.txt";
 
     public List getKoleksi() {
         return koleksi;
